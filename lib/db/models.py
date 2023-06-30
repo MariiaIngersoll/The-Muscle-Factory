@@ -14,7 +14,7 @@ class Trainer(Base):
     def __repr__(self):
         return (
             f"Id: {self.id}, "
-            + f"Name: {self.first_name}, "
+            + f"Trainer's Name: {self.first_name} {self.last_name}, "
             + f"Years of experience: {self.years_of_experience}"
         )
     
@@ -27,4 +27,14 @@ class Trainer(Base):
         gym_goal = Column(String())
         trainings_per_week = Column(Integer())
         trainer_id = Column(Integer(), ForeignKey('trainers.id'))
+
+
+
+        def __repr__(self):
+            return (
+                f"Id: {self.id}, "
+                + f"Member's Name: {self.first_name} {self.last_name}, "
+                + f"Gym Goal: {self.gym_goal}, "
+                + f"Trainings per week: {self.trainings_per_week}, "
+            )
 
