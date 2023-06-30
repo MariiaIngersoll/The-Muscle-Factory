@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, backref
 
 Base = declarative_base()
 
@@ -10,6 +11,7 @@ class Trainer(Base):
     first_name = Column(String())
     last_name = Column(String())
     years_of_experience = Column(Integer())
+    members = relationship("Member", backref="trainer")
 
     def __repr__(self):
         return (
@@ -18,6 +20,7 @@ class Trainer(Base):
             + f"Years of experience: {self.years_of_experience}"
         )
     
+
     class Member(Base):
         __tablename__ = 'members'
 
