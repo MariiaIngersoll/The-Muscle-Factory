@@ -17,3 +17,14 @@ class Trainer(Base):
             + f"Name: {self.first_name}, "
             + f"Years of experience: {self.years_of_experience}"
         )
+    
+    class Member(Base):
+        __tablename__ = 'members'
+
+        id = Column(Integer(), primary_key=True)
+        first_name = Column(String())
+        last_name = Column(String())
+        gym_goal = Column(String())
+        trainings_per_week = Column(Integer())
+        trainer_id = Column(Integer(), ForeignKey('trainers.id'))
+
