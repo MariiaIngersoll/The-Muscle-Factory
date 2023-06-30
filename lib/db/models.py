@@ -54,3 +54,11 @@ class Exercise():
     durations = Column(Integer())
     trainer_id = Column(Integer(), ForeignKey('trainers.id'))
 
+    def __repr__(self):
+        return (
+            f"Id: {self.id}, "
+            + f"Exercise's: name {self.name}, "
+            + f"Intensity: {self.intensity}, "
+            + f"Duration: {self.durations}, "
+        )
+
