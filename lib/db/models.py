@@ -12,7 +12,8 @@ class Trainer(Base):
     years_of_experience = Column(Integer())
 
     def __repr__(self):
-        f"Id: {self.id}, " \
-        + f"Name: {self.first_name} {self.last_name}, " \
-        + f"Years of experience: {self.years_of_experience}"
-        
+        return (
+            f"Id: {self.id}, "
+            + f"Name: {self.first_name}, "
+            + f"Years of experience: {self.years_of_experience}"
+        )
