@@ -32,7 +32,7 @@ class Member(Base):
     last_name = Column(String())
     gym_goal = Column(String())
     trainings_per_week = Column(Integer())
-    trainer_id = Column(Integer(), ForeignKey('trainers.id'))
+    trainer_id = Column(Integer(), ForeignKey('trainers.id'), nullable=True)
 
 
 
@@ -44,7 +44,7 @@ class Member(Base):
             + f"Trainings per week: {self.trainings_per_week}, "
         )
     
-class Exercise():
+class Exercise(Base):
 
     __tablename__= "exercises"
 
@@ -57,8 +57,11 @@ class Exercise():
     def __repr__(self):
         return (
             f"Id: {self.id}, "
-            + f"Exercise's: name {self.name}, "
+            + f"Exercise's name {self.name}, "
             + f"Intensity: {self.intensity}, "
             + f"Duration: {self.durations}, "
         )
+    
+
+
 
