@@ -55,17 +55,18 @@ if __name__ == "__main__":
     list_of_gym_goals = ["Grow Stronger Glutes", "Improve Upper Body Strength", "Build a Stronger Core","Boost Your Cardio Endurance", "Lift Weights", "Increase Your Flexibility","Learn a New Skill"]
 
     members = []
-
-    for _ in range(100):
-            member = Member(
-                first_name=f"{fake.first_name()}",
-                last_name=f"{fake.last_name()}",
-                gym_goal = random.choice(list_of_gym_goals),
-                trainings_per_week = random.randint(2,7),
-            )
-            members.append(member)
-            session.add(member)
-            session.commit()
+    for trainer_ in all:
+        for _ in range(100):
+                member = Member(
+                    first_name=f"{fake.first_name()}",
+                    last_name=f"{fake.last_name()}",
+                    gym_goal = random.choice(list_of_gym_goals),
+                    trainings_per_week = random.randint(2,7),
+                    trainer_id=random.choice(all).id
+                )
+                members.append(member)
+                session.add(member)
+                session.commit()
         
 
     
