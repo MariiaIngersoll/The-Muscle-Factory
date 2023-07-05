@@ -37,12 +37,15 @@ if __name__ == "__main__":
 
     exercises = []
 
+    all = session.query(Trainer).all()
 
-    for exer in type_of_exersices:
+
+    for trainer in all:
         exercise = Exercise(
-            name = exer,
+            name = random.choice(type_of_exersices),
             intensity = random.randint(4,10),
             durations = str(random.randint(30, 60)) + " Minutes",
+            trainer_id=random.choice(all).id,
         )
         exercises.append(exercise)
         session.add(exercise)
