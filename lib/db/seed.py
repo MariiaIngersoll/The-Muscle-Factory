@@ -19,7 +19,6 @@ if __name__ == "__main__":
     
     trainers = []
 
-    list_of_gym_goals = ["Grow Stronger Glutes", "Improve Upper Body Strength", "Build a Stronger Core","Boost Your Cardio Endurance", "Lift Weights", "Increase Your Flexibility","Learn a New Skill"]
 
     for _ in range(5):
         trainer = Trainer(
@@ -33,7 +32,19 @@ if __name__ == "__main__":
         session.commit()
 
     
-    list_of_gym_goals = ["Grow Stronger Glutes", "Improve Upper Body Strength", "Build a Stronger Core","Boost Your Cardio Endurance", "Lift Weights", "Increase Your Flexibility","Learn a New Skill"]
+    type_of_exersices = ["Yoga", "Pilates","Strengh Training","Bicycling","Stretching","Weightlifting","Cycling","High-intensity interval training","Boxing"]
+
+    exercises = []
+
+    for exer in type_of_exersices:
+        exercise = Exercise(
+            name = exer,
+            intensity = random.randint(4,10),
+            durations = str(random.randint(30, 60)) + " Minutes"
+        )
+        exercises.append(exercise)
+        session.add(exercise)
+        session.commit()
 
     
 
