@@ -16,7 +16,7 @@ if __name__ == "__main__":
     session.query(Exercise).delete()
 
     fake = Faker()
-    
+
     trainers = []
 
 
@@ -31,20 +31,39 @@ if __name__ == "__main__":
         session.add(trainer)
         session.commit()
 
+
     
     type_of_exersices = ["Yoga", "Pilates","Strengh Training","Bicycling","Stretching","Weightlifting","Cycling","High-intensity interval training","Boxing"]
 
     exercises = []
 
+
     for exer in type_of_exersices:
         exercise = Exercise(
             name = exer,
             intensity = random.randint(4,10),
-            durations = str(random.randint(30, 60)) + " Minutes"
+            durations = str(random.randint(30, 60)) + " Minutes",
         )
         exercises.append(exercise)
         session.add(exercise)
         session.commit()
+
+    
+    list_of_gym_goals = ["Grow Stronger Glutes", "Improve Upper Body Strength", "Build a Stronger Core","Boost Your Cardio Endurance", "Lift Weights", "Increase Your Flexibility","Learn a New Skill"]
+
+    members = []
+
+    for _ in range(100):
+            member = Member(
+                first_name=f"{fake.first_name()}",
+                last_name=f"{fake.last_name()}",
+                gym_goal = random.choice(list_of_gym_goals),
+                trainings_per_week = random.randint(2,7),
+            )
+            members.append(member)
+            session.add(member)
+            session.commit()
+        
 
     
 
