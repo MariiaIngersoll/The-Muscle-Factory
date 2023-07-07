@@ -8,24 +8,22 @@ engine = create_engine("sqlite:///db/muscle_factory.db")
 session = Session(engine, future=True)
 
 
-def goodbye():
-    print("Thank you for checking out our gym! Hope you enjoyed your time here!!!")
-
 def reroute():
     option = 0
-    while option != 2:
+    while option != 1:
         print(f"""
-            1 - Would you like to go back to the main menu? 
-            2 - Exit the program.
+            1 - Would you like to stay in this module? 
+            2 - I wanna go back to main menu
             """)
         option = int(input())
         if option == 1:
+            print("")
+
+        if option == 2:
+            print("")
             main()
-        elif option == 2:
-            print("Exiting the program.")
-            sys.exit(0)
-        else:
-            print("Invalid option. Please select a valid option.")
+            
+        
 
 
 def main():
@@ -35,25 +33,42 @@ def main():
     choice = 0
     while choice !=5:
         print(f'''
-            What would like to do today?
-            1 - I would like to know what kind of exercises and gym classes I can attend as a member of this gym?
-            
-            2 - Sign up for a membership
-              
-            3 - Edit my information
-              
-            4 - Cancel my membership
-              
-            5 - Exit
-            ''')
+                    What would like to do today?
+                    1 - I would like to know what kind of exercises and gym classes I can attend as a member of this gym?
+                    
+                    2 - Sign up for a membership
+                    
+                    3 - Edit my information
+                    
+                    4 - Cancel my membership
+                    
+                    5 - Exit
+                    ''')
         choice = int(input())
         if choice == 1:
-            print("Sure! Pick a class you are the most interested in! We got great options!")
-            all = session.query(Exercise).all()
-            for i in all:
-                print(i)
+            exercise_choice = 0
+            while exercise_choice != 4:
 
-            reroute()
+                print("""
+                    1 - Browse all the classes we have!
+                    2 - Filter classes by intensity
+                    3 - Filter classes by duration
+                    4 - Go back to main menu
+                        """
+                        )
+                exercise_choice = int(input())
+                if exercise_choice == 1:
+                    all = session.query(Exercise).all()
+                    for i in all:
+                        print(i.name)
+
+                    selected_class = input("Type name of the class to find out more information!!>>>")
+                    name_of_class = session.query(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
+                    for class_ in name_of_class:
+                        print(class_)
+                    
+
+                    reroute()
 
         elif choice == 2:
             print("Lets Sign Up!")
@@ -81,7 +96,11 @@ def main():
             reroute()
 
         elif choice == 5:
-            print("Exiting program")
+            goodbye()
+            sys.exit(0)
+
+def goodbye():
+    print("Thank you for checking out our gym! Hope you enjoyed your time here!!!")
 
 if __name__ == "__main__":
     main()
