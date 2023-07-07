@@ -1,4 +1,4 @@
-# import sys
+import sys
 import importlib
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -8,8 +8,25 @@ engine = create_engine("sqlite:///db/muscle_factory.db")
 session = Session(engine, future=True)
 
 
+def goodbye():
+    print("Thank you for checking out our gym! Hope you enjoyed your time here!!!")
+
 def reroute():
-    main()
+    option = 0
+    while option != 2:
+        print(f"""
+            1 - Would you like to go back to the main menu? 
+            2 - Exit the program.
+            """)
+        option = int(input())
+        if option == 1:
+            main()
+        elif option == 2:
+            print("Exiting the program.")
+            sys.exit(0)
+        else:
+            print("Invalid option. Please select a valid option.")
+
 
 def main():
     print(f"""
@@ -35,11 +52,10 @@ def main():
             all = session.query(Exercise).all()
             for i in all:
                 print(i)
-                
-            trainer_id = int(input("Select an name of a class and we will assign you a trainer!"))
-            # how to assign a class to a specific trainer?
 
-        if choice == 2:
+            reroute()
+
+        elif choice == 2:
             print("Lets Sign Up!")
             first_name = input("What is your name?")
             last_name = input("What is your last name?")
@@ -53,18 +69,20 @@ def main():
             session.add(new)
             session.commit()
             print("Welcome to the Muscle Factory gym. Hope you enjoy your time here!!!")
-
             reroute()
 
-       
+        elif choice == 3:
+            
+           print("BUTTTTT")
+           reroute()
 
-        if choice == 5:
-            print("Goodbye")
-            break
+        elif choice == 4:
+            print("HUHHHHH")
+            reroute()
 
-
-
-
+        elif choice == 5:
+            print("Exiting program")
 
 if __name__ == "__main__":
     main()
+   
