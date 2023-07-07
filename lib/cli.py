@@ -1,6 +1,7 @@
 import sys
+
 import importlib
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import Session
 from db.models import Member, Trainer, Exercise
 
@@ -23,13 +24,11 @@ def reroute():
             print("")
             main()
             
-        
-
 
 def main():
     print(f"""
-                        Hello user!
-            Welcome to The Muscle Factory Gym!""")
+                            Hello user!
+                    Welcome to The Muscle Factory Gym!""")
     choice = 0
     while choice !=5:
         print(f'''
@@ -47,6 +46,7 @@ def main():
         choice = int(input())
         if choice == 1:
             exercise_choice = 0
+            
             while exercise_choice != 4:
 
                 print("""
@@ -57,8 +57,9 @@ def main():
                         """
                         )
                 exercise_choice = int(input())
+                all = session.query(Exercise).all()
                 if exercise_choice == 1:
-                    all = session.query(Exercise).all()
+                    
                     for i in all:
                         print(i.name)
 
@@ -67,8 +68,20 @@ def main():
                     for class_ in name_of_class:
                         print(class_)
                     
-
                     reroute()
+                from sqlalchemy import desc
+
+                if exercise_choice == 2:
+                    filtered_by_intensity = session.query(Exercise.name, Exercise.intensity).order_by(asc(Exercise.intensity), Exercise.name).all()
+                    for intense in filtered_by_intensity:
+                        exercise_name = intense[0]
+                        intensity = intense[1]
+                        print(f"Exercise: {exercise_name}")
+                        print(f"Intensity: {intensity}")
+                                    
+
+
+                
 
         elif choice == 2:
             print("Lets Sign Up!")
