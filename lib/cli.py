@@ -213,17 +213,16 @@ def main():
             session.commit()
             print(f"{members_data.first_name} {members_data.last_name} has been deleted!!!")
             goodbye()
+            break
 
+        if choice == 6:
+            goodbye()
+            break
 
-        else:
-            choice = 6
-
-                
 
 def goodbye():
     print("Thank you for checking out our gym! Hope you enjoyed your time here!!!")
 
 if __name__ == "__main__":
     main()
-    goodbye()
    
