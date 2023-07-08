@@ -19,6 +19,7 @@ def reroute():
             print("")
 
         if option == 2:
+            print("")
             main()
             
 
@@ -48,8 +49,11 @@ def main():
 
                 print("""
                     1 - Browse all the classes we have!
+                      
                     2 - Filter classes by intensity
+                      
                     3 - Filter classes by duration
+                      
                     4 - Go back to main menu
                         """
                         )
@@ -59,7 +63,7 @@ def main():
                     
                     for i in all:
                         print(i.name)
-
+                    print("")
                     selected_class = input("Type name of the class to find out more information!!>>>")
                     name_of_class = session.query(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
                     if name_of_class:
@@ -78,11 +82,12 @@ def main():
 
                             if class_trainer:
                                 for trainer in class_trainer:
+                                    print("")
                                     print(f"The insctructor for {exercise.name} is {trainer.first_name} {trainer.last_name} with {trainer.years_of_experience} years of experience!")
                             else:
                                 print("No trainer found for this exercise.")
                             
-                            print("")  # Add a new line for separation
+                            print("")
                             reroute()
                     else:
                         raise NameError("No matching class found.")
@@ -95,6 +100,7 @@ def main():
                     for intense in filtered_by_intensity:
                         exercise_name = intense[0]
                         intensity = intense[1]
+                        print("")
                         print(f"Exercise: {exercise_name}")
                         print(f"Intensity: {intensity}")
                         
@@ -108,6 +114,7 @@ def main():
                     for duration in filtered_by_duration:
                         exercise_name = duration[0]
                         duration = duration[1]
+                        print("")
                         print(f"Exercise: {exercise_name}")
                         print(f"Duration: {duration}")
                         
@@ -120,13 +127,19 @@ def main():
             last_name = input("What is your last name?")
             trainings_per_week = int(input("Whats the number of trainings you want to do per week?"))
             gym_goal = input("What is your goal?")
+            class_choice = input("What class do you wanna take?")
+
+            trainer = session.query(Trainer).join(Exercise).filter(Exercise.name.ilike(f"%{class_choice}%")).first()
 
             new = Member(first_name=first_name, 
                         last_name=last_name, 
                         gym_goal=gym_goal,
-                        trainings_per_week= trainings_per_week)
+                        trainings_per_week= trainings_per_week,
+                        trainer_id = trainer.id if trainer else None
+                        )
             session.add(new)
             session.commit()
+            print("")
             print("Welcome to the Muscle Factory gym. Hope you enjoy your time here!!!")
             reroute()
 
