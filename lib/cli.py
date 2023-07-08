@@ -11,8 +11,8 @@ def reroute():
     option = 0
     while option != 1:
         print(f"""
-            1 - WOULD YOU LIKE TO STAY IN THIS MODULE?
-            2 - GO BACK TO MAIN MENU
+                    1 - WOULD YOU LIKE TO STAY IN THIS MODULE?
+                    2 - GO BACK TO MAIN MENU
             """)
         option = int(input())
         if option == 1:
@@ -88,7 +88,8 @@ def main():
                                 print("No trainer found for this exercise.")
                             
                             print("")
-                            reroute()
+
+                        reroute()
                     else:
                         raise NameError("No matching class found.")
                 
@@ -140,7 +141,7 @@ def main():
             session.add(new)
             session.commit()
             print("")
-            print("Welcome to the Muscle Factory gym. Hope you enjoy your time here!!!")
+            print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.last_name} ")
             reroute()
 
         elif choice == 3:
