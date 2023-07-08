@@ -190,8 +190,18 @@ def main():
                     members_data.last_name = new_name
                     session.commit()
                     print(f"Your last name have been changed to {members_data.last_name}")
+                
+                if edit_choice == 3:
+                    new_goal = input("What is new gym goal?!>>>")
+                    members_data.gym_goal == new_goal
+                    session.commit()
+                    print(f"Your new gym goal is {members_data.gym_goal}")
 
-    
+                if edit_choice == 4:
+                    trainings_per_week_new = int(input("What is the amount of gym sessions you can attend weekly? Please enter a number.>>>"))
+                    members_data.trainings_per_week == trainings_per_week_new
+                    session.commit()
+                    print(f"Number of gym sessions per week has been updated to {members_data.trainings_per_week}")
 
         
 
