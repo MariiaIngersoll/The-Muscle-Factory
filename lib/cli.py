@@ -64,16 +64,15 @@ def main():
                 exercise_choice = int(input())
                 all = session.query(Exercise).all()
                 if exercise_choice == 1:
-                    
                     for i in all:
                         print(i.name)
-                    print("")
+                        print("")
+
                     selected_class = input("Type name of the class to find out more information!!>>>")
                     name_of_class = session.query(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
                     if name_of_class:
                         for exercise in name_of_class:
-                            print("Exercise:")
-                            print(f"Name: {exercise.name}")
+                            print(f"Exercise's Name: {exercise.name}")
                             print(f"Intensity: {exercise.intensity}")
                             print(f"Duration: {exercise.durations}")
 
@@ -157,17 +156,41 @@ def main():
             session.add(new)
             session.commit()
             print("")
-            print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.last_name} ")
+            print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.first_name} {trainer.last_name} ")
             reroute()
 
         elif choice == 4:
-            
-           print("BUTTTTT")
-           reroute()
+            member_id = input("Please type your member ID in order to access the edit>>>")
+            members_data = session.get(Member, member_id)
+            edit_choice = 0
+            while edit_choice != 5:
+                print(f"""
+                        What information would you like to edit?
+                      
+                        1 - First name
+                      
+                        2 - Last Name 
+                      
+                        3 - Gym Goal
+                      
+                        4 - Trainings per week
+                      
+                        5 - Go back to MAIN MENU
+                      """
+                      )
+                edit_choice = int(input())
+                if edit_choice == 1:
+                    new_name = input("What would you like to change your forst name to?>>>")
+                    members_data.first_name == new_name
+                    session.commit()
+                    print("Changes have been made!")
+
+    
+
+        
 
         elif choice == 5:
             print("HUHHHHH")
-            reroute()
 
         else:
             choice = 6
