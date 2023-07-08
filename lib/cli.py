@@ -193,20 +193,27 @@ def main():
                 
                 if edit_choice == 3:
                     new_goal = input("What is new gym goal?!>>>")
-                    members_data.gym_goal == new_goal
+                    members_data.gym_goal = new_goal
                     session.commit()
                     print(f"Your new gym goal is {members_data.gym_goal}")
 
                 if edit_choice == 4:
                     trainings_per_week_new = int(input("What is the amount of gym sessions you can attend weekly? Please enter a number.>>>"))
-                    members_data.trainings_per_week == trainings_per_week_new
+                    members_data.trainings_per_week = trainings_per_week_new
                     session.commit()
                     print(f"Number of gym sessions per week has been updated to {members_data.trainings_per_week}")
 
         
 
         elif choice == 5:
-            print("HUHHHHH")
+            print("We are so sad to see you canceling your membership! :(")
+            deleted_id = input("Enter your ID in order to proceed with membership cancelation>>>")
+            members_data = session.get(Member, deleted_id)
+            session.delete(members_data)
+            session.commit()
+            print(f"{members_data.first_name} {members_data.last_name} has been deleted!!!")
+            goodbye()
+
 
         else:
             choice = 6
