@@ -160,7 +160,7 @@ def main():
             reroute()
 
         elif choice == 4:
-            member_id = input("Please type your member ID in order to access the edit>>>")
+            member_id = input("Please type your member ID in order to access the edit menu>>>")
             members_data = session.get(Member, member_id)
             edit_choice = 0
             while edit_choice != 5:
@@ -180,10 +180,16 @@ def main():
                       )
                 edit_choice = int(input())
                 if edit_choice == 1:
-                    new_name = input("What would you like to change your forst name to?>>>")
-                    members_data.first_name == new_name
+                    new_name = input("What would you like to change your first name to?>>>")
+                    members_data.first_name = new_name
                     session.commit()
-                    print("Changes have been made!")
+                    print(f"Your last name have been changed to {members_data.first_name}")
+
+                if edit_choice == 2:
+                    new_name = input("What would you like to change your last name to?>>>")
+                    members_data.last_name = new_name
+                    session.commit()
+                    print(f"Your last name have been changed to {members_data.last_name}")
 
     
 
