@@ -28,19 +28,23 @@ def main():
                             Hello user!
                     Welcome to The Muscle Factory Gym!""")
     choice = 0
-    while choice !=5:
+    while choice !=6:
         print(f'''
-                    What would like to do today?
+                    What would you like to do today?
+              
                     1 - I would like to know what kind of exercises and gym classes I can attend as a member of this gym?
+              
+                    2 - Show me information about your trainers
                     
-                    2 - Sign up for a membership
+                    3 - Sign up for a membership
                     
-                    3 - Edit my information
+                    4 - Edit my information
                     
-                    4 - Cancel my membership
+                    5 - Cancel my membership
                     
-                    5 - Exit
+                    6 - Exit
                     ''')
+        
         choice = int(input())
         if choice == 1:
             exercise_choice = 0
@@ -120,9 +124,21 @@ def main():
                         print(f"Duration: {duration}")
                         
                     reroute()
+        
+        elif choice == 2:
+            all_trainers = session.query(Trainer).all()
+            for trainer in all_trainers:
+                print(trainer)
+
+            print("")
+            trainer_choice = int(input("Type trainer's ID to find out what classes they teach >>> "))
+            selected_trainer = session.query(Exercise).join(Trainer).filter(Trainer.id == trainer_choice).all()
+            for i in selected_trainer:
+                print(i.name)
+
                                     
 
-        elif choice == 2:
+        elif choice == 3:
             print("Lets Sign Up!")
             first_name = input("What is your name?")
             last_name = input("What is your last name?")
@@ -144,17 +160,17 @@ def main():
             print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.last_name} ")
             reroute()
 
-        elif choice == 3:
+        elif choice == 4:
             
            print("BUTTTTT")
            reroute()
 
-        elif choice == 4:
+        elif choice == 5:
             print("HUHHHHH")
             reroute()
 
         else:
-            choice = 5
+            choice = 6
 
                 
 
