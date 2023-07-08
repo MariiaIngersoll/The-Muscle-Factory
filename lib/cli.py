@@ -1,5 +1,3 @@
-import sys
-
 import importlib
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import Session
@@ -13,15 +11,14 @@ def reroute():
     option = 0
     while option != 1:
         print(f"""
-            1 - Would you like to stay in this module? 
-            2 - I wanna go back to main menu
+            1 - WOULD YOU LIKE TO STAY IN THIS MODULE?
+            2 - GO BACK TO MAIN MENU
             """)
         option = int(input())
         if option == 1:
             print("")
 
         if option == 2:
-            print("")
             main()
             
 
@@ -65,27 +62,31 @@ def main():
 
                     selected_class = input("Type name of the class to find out more information!!>>>")
                     name_of_class = session.query(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
-                    for exercise in name_of_class:
-                        print("Exercise:")
-                        print(f"Name: {exercise.name}")
-                        print(f"Intensity: {exercise.intensity}")
-                        print(f"Duration: {exercise.durations}")
+                    if name_of_class:
+                        for exercise in name_of_class:
+                            print("Exercise:")
+                            print(f"Name: {exercise.name}")
+                            print(f"Intensity: {exercise.intensity}")
+                            print(f"Duration: {exercise.durations}")
 
-                        class_trainer = (
-                            session.query(Trainer)
-                            .join(Exercise, Exercise.trainer_id == Trainer.id)
-                            .filter(Exercise.id == exercise.id)
-                            .all()
-                        )
+                            class_trainer = (
+                                session.query(Trainer)
+                                .join(Exercise, Exercise.trainer_id == Trainer.id)
+                                .filter(Exercise.id == exercise.id)
+                                .all()
+                            )
 
-                        if class_trainer:
-                            for trainer in class_trainer:
-                                print(f"The insctructor for {exercise.name} is {trainer.first_name} {trainer.last_name} with {trainer.years_of_experience} years of experience!")
-                        else:
-                            print("No trainer found for this exercise.")
-                        
-                        print("")  # Add a new line for separation
-                        reroute()
+                            if class_trainer:
+                                for trainer in class_trainer:
+                                    print(f"The insctructor for {exercise.name} is {trainer.first_name} {trainer.last_name} with {trainer.years_of_experience} years of experience!")
+                            else:
+                                print("No trainer found for this exercise.")
+                            
+                            print("")  # Add a new line for separation
+                            reroute()
+                    else:
+                        raise NameError("No matching class found.")
+                
                 if exercise_choice == 2:
                     filtered_by_intensity = session.query(
                         Exercise.name, Exercise.intensity).order_by(
@@ -113,9 +114,6 @@ def main():
                     reroute()
                                     
 
-
-                
-
         elif choice == 2:
             print("Lets Sign Up!")
             first_name = input("What is your name?")
@@ -141,13 +139,15 @@ def main():
             print("HUHHHHH")
             reroute()
 
-        elif choice == 5:
-            goodbye()
-            sys.exit(0)
+        else:
+            choice = 5
+
+                
 
 def goodbye():
     print("Thank you for checking out our gym! Hope you enjoyed your time here!!!")
 
 if __name__ == "__main__":
     main()
+    goodbye()
    
