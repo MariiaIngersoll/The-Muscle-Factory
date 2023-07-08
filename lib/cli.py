@@ -1,7 +1,7 @@
 import sys
 
 import importlib
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import Session
 from db.models import Member, Trainer, Exercise
 
@@ -65,19 +65,52 @@ def main():
 
                     selected_class = input("Type name of the class to find out more information!!>>>")
                     name_of_class = session.query(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
-                    for class_ in name_of_class:
-                        print(class_)
-                    
-                    reroute()
-                from sqlalchemy import desc
+                    for exercise in name_of_class:
+                        print("Exercise:")
+                        print(f"Name: {exercise.name}")
+                        print(f"Intensity: {exercise.intensity}")
+                        print(f"Duration: {exercise.durations}")
 
+                        class_trainer = (
+                            session.query(Trainer)
+                            .join(Exercise, Exercise.trainer_id == Trainer.id)
+                            .filter(Exercise.id == exercise.id)
+                            .all()
+                        )
+
+                        if class_trainer:
+                            for trainer in class_trainer:
+                                print(f"The insctructor for {exercise.name} is {trainer.first_name} {trainer.last_name} with {trainer.years_of_experience} years of experience!")
+                        else:
+                            print("No trainer found for this exercise.")
+                        
+                        print("")  # Add a new line for separation
+                        reroute()
                 if exercise_choice == 2:
-                    filtered_by_intensity = session.query(Exercise.name, Exercise.intensity).order_by(asc(Exercise.intensity), Exercise.name).all()
+                    filtered_by_intensity = session.query(
+                        Exercise.name, Exercise.intensity).order_by(
+                        asc(Exercise.intensity)).all()
+                    
                     for intense in filtered_by_intensity:
                         exercise_name = intense[0]
                         intensity = intense[1]
                         print(f"Exercise: {exercise_name}")
                         print(f"Intensity: {intensity}")
+                        
+                    reroute()
+
+                if exercise_choice == 3:
+                    filtered_by_duration = session.query(
+                        Exercise.name, Exercise.durations).order_by(
+                        desc(Exercise.durations)).all()
+                    
+                    for duration in filtered_by_duration:
+                        exercise_name = duration[0]
+                        duration = duration[1]
+                        print(f"Exercise: {exercise_name}")
+                        print(f"Duration: {duration}")
+                        
+                    reroute()
                                     
 
 
