@@ -33,27 +33,43 @@ if __name__ == "__main__":
 
 
     
-    type_of_exersices = ["Yoga", "Pilates","Strengh Training","Bicycling","Stretching","Weightlifting","Cycling","High-intensity interval training","Boxing"]
+    list_of_exercises = {
+        "1": "Yoga",
+        "2": "Pilates",
+        "3": "Strength Training",
+        "4": "Bicycling",
+        "5": "Stretching",
+        "6": "Weightlifting",
+        "7": "Cycling",
+        "8": "High-intensity interval training",
+        "9": "Boxing",
+    }
 
     exercises = []
 
     all = session.query(Trainer).all()
 
-
-    # for trainer in all:
-    for type in type_of_exersices:
+ 
+    for type in list_of_exercises:
         exercise = Exercise(
-            name = type,
-            intensity = random.randint(4,10),
+            name = list_of_exercises[type],
+            intensity = random.randint(4,9),
             durations = str(random.randint(30, 60)) + " Minutes",
-            trainer_id=random.choice(all).id,
+            trainer_id=random.choice(all).id
         )
         exercises.append(exercise)
         session.add(exercise)
         session.commit()
-
     
-    list_of_gym_goals = ["Grow Stronger Glutes", "Improve Upper Body Strength", "Build a Stronger Core","Boost Your Cardio Endurance", "Lift Weights", "Increase Your Flexibility","Learn a New Skill"]
+    list_of_gym_goals = [
+        "Grow Stronger Glutes",
+        "Improve Upper Body Strength",
+        "Build a Stronger Core",
+        "Boost Your Cardio Endurance",
+        "Lift Weights",
+        "Increase Your Flexibility",
+        "Learn a New Skill",
+    ]
 
     members = []
 
