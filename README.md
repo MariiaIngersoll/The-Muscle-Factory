@@ -18,24 +18,45 @@ Navigate to the lib/db directory and run python seed.py to populate the database
 Return to the lib directory by running cd ..
 Run "python cli.py" to start using The Muscle Factory Gym program.
 
-## Key Models
-Member:
+## Database
+The program uses an SQLite database to store member, trainer, and exercise data. The database file is located at db/muscle_factory.db. The database schema is defined in db/models.py. You can modify the schema by editing this file.
 
-Attributes: id, first name, lasy name, gym goal, trainings per week
+## Models
+The models.py file contains the SQLAlchemy models for the entities used in the Muscle Factory Gym program. Here's an overview of the models:
 
-Relationships: Belongs to a trainer
+Trainer: Represents a gym trainer. It has the following attributes:
 
-Trainer:
+id: Unique identifier for the trainer.
+first_name: First name of the trainer.
+last_name: Last name of the trainer.
+years_of_experience: Number of years of experience of the trainer.
+members: Relationship to the Member model, representing the members trained by the trainer.
+exercises: Relationship to the Exercise model, representing the exercises taught by the trainer.
 
-Attributes: id, first name, last name, years of experience
+Member: Represents a gym member. It has the following attributes:
 
-Relationships: Has multiple members and exercises 
+id: Unique identifier for the member.
+first_name: First name of the member.
+last_name: Last name of the member.
+gym_goal: Goal of the member in the gym.
+trainings_per_week: Number of gym trainings the member wants to do per week.
+trainer_id: Foreign key referencing the id of the trainer 
 
-Exercise:
+Exercise: Represents a gym exercise or class. It has the following attributes:
 
-Attributes: id, name, intensity, duration
+id: Unique identifier for the exercise.
+name: Name of the exercise.
+intensity: Intensity level of the exercise.
+durations: Duration of the exercise.
+trainer_id: Foreign key referencing the id of the trainer who teaches the exercise.
+Each model also provides a __repr__() method to display meaningful representations of the objects.
 
-Relationships: Belongs to a trainer
+Seeding the Database
+To populate the database with initial data, you can use the seed.py script. This script inserts sample member, trainer, and exercise records into the database. Cd into lib/db and then run the script using the following command:
+
+python seed.py
+
+## Command-Line Interface (CLI)
 
 
 ## Contributing
