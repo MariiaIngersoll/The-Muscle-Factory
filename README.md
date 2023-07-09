@@ -11,12 +11,12 @@ SQLAlchemy
 You can install SQLAlchemy using the following command:
 pip install SQLAchemy
 
-``` Clone this repository to your local machine and navigate to its directory.
-Run pipenv install to install all the necessary package dependencies.
-Run pipenv shell to enter the virtual environment.
-Navigate to the lib/db directory and run python seed.py to populate the database with mock data.
-Return to the lib directory by running cd ..
-Run "python cli.py" to start using The Muscle Factory Gym program. ```
+* Clone this repository to your local machine and navigate to its directory.
+* Run pipenv install to install all the necessary package dependencies.
+* Run pipenv shell to enter the virtual environment.
+* Navigate to the lib/db directory and run python seed.py to populate the database with mock data.
+* Return to the lib directory by running cd ..
+* Run "python cli.py" to start using The Muscle Factory Gym program. ```
 
 ## Database
 The program uses an SQLite database to store member, trainer, and exercise data. The database file is located at db/muscle_factory.db. The database schema is defined in db/models.py. You can modify the schema by editing this file.
