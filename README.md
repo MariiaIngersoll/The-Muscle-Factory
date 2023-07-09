@@ -153,4 +153,4 @@ Licensing is not being offered at this time. For any questions, please reach out
 ## Contacts
 If you have any questions or suggestions, please contact me at maria.nagornaya1996@gmail.com
 
-Thank you for checking out my program!
+# Thank you for checking out my program!
