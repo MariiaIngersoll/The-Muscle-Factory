@@ -57,13 +57,100 @@ To populate the database with initial data, you can use the seed.py script. This
 python seed.py
 
 ## Command-Line Interface (CLI)
+The cli.py file contains the command-line interface for the Muscle Factory Gym program. It provides a convenient way to interact with the program using commands instead of the menu. Cd into lib directory and run the CLI using the following command:
+
+python cli.py
+
+The program will display a menu with various options. Use the corresponding numbers to select an action.
+
+Option 1: Browse exercise classes
+Option 2: View trainer information
+Option 3: Sign up for a membership
+Option 4: Edit member information
+Option 5: Cancel membership
+Option 6: Exit the program
+Follow the prompts and enter the required information to perform each action.
+
+
+When you select option 1 from the main menu in your program, the following sequence of actions will occur:
+
+The program will display a sub-menu related to exercise browsing.
+
+It will prompt you to select an option:
+
+Option 1: Browse all the classes available.
+Option 2: Filter classes by intensity.
+Option 3: Filter classes by duration.
+Option 4: Go back to the main menu.
+You will need to enter the corresponding number for your desired option.
+
+Based on your selection, the program will perform the following actions:
+
+Option 1: Browse all classes:
+
+The program will retrieve all exercise classes from the database.
+It will then display the names of all the classes.
+You will be prompted to enter the name of a specific class to get more information.
+The program will find the class based on the name you provided and display detailed information about the exercise, including its name, intensity, duration, and the instructor's name and years of experience.
+If no matching class is found, a NameError will be raised.
+After displaying the information, you will be redirected to the reroute() function.
+
+Option 2: Filter classes by intensity:
+
+The program will query the database and retrieve exercise classes, ordered by intensity in ascending order.
+It will display the exercise name and intensity for each class.
+After displaying the information, you will be redirected to the reroute() function.
+
+Option 3: Filter classes by duration:
+
+The program will query the database and retrieve exercise classes, ordered by duration in descending order.
+It will display the exercise name and duration for each class.
+After displaying the information, you will be redirected to the reroute() function.
+
+Option 4: Go back to the main menu.
+You will be redirected back to the main menu.
+
+If you select option 2 from main menu "View Trainer Information":
+
+Retrieves information about all the gym trainers from the database.
+Displays the trainer information, including their IDs, names, and years of experience.
+Prompts you to enter the ID of a trainer to see the classes they teach.
+Retrieves the exercise classes taught by the selected trainer and displays their names.
+
+If you select option 3 from main menu " Sign up for a Membership":
+Prompts you to enter your name, last name, number of trainings per week, gym goal, and the class you want to take.
+Finds a trainer for the chosen class and assigns them as your instructor.
+Creates a new member record in the database with the provided information.
+Displays a welcome message with your name and the name of your instructor.
+
+
+If you select option 4 from main menu "Edit Member Information":
+Prompts you to enter your member ID.
+Displays a sub-menu to choose the information you want to edit: first name, last name, gym goal, trainings per week, or go back to the main menu.
+Performs the corresponding edit based on your selection.
+Updates the member information in the database.
+Displays a confirmation message with the updated information.
+
+If you select option 5 from main menu "Cancel Membership":
+
+Prompts you to enter your member ID to confirm the cancellation.
+Retrieves your member record from the database.
+Deletes your member record.
+Displays a confirmation message with your name and a farewell message.
+
+Option 6: Exit the Program
+
+Displays a farewell message.
+Exits the program.
 
 
 ## Contributing
 If you would like to contribute to this project, feel free to submit pull requests or open issues in the repository.
 
+## License
+Licensing is not being offered at this time. For any questions, please reach out to our support team.
+
 ## Contacts
 If you have any questions or suggestions, please contact me at maria.nagornaya1996@gmail.com
 
-Thank you for checking out my program! I hope you enjoy your time at The Muscle Factory Gym!
-
+Thank you for checking out my program!
