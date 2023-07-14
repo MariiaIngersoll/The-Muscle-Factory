@@ -75,12 +75,7 @@ def main():
                             print(f"Intensity: {exercise.intensity}")
                             print(f"Duration: {exercise.durations}")
 
-                            class_trainer = (
-                                session.query(Trainer)
-                                .join(Exercise, Exercise.trainer_id == Trainer.id)
-                                .filter(Exercise.id == exercise.id)
-                                .all()
-                            )
+                            class_trainer = session.query(Trainer).join(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
 
                             if class_trainer:
                                 for trainer in class_trainer:
@@ -130,7 +125,9 @@ def main():
 
             print("")
             trainer_choice = int(input("Type trainer's ID to find out what classes they teach >>> "))
-            selected_trainer = session.query(Exercise).join(Trainer).filter(Trainer.id == trainer_choice).all()
+            selected_trainer = session.query(Trainer).filter(Trainer.id == trainer_choice).first().exercises
+
+            # selected_trainer = session.query(Exercise).join(Trainer).filter(Trainer.id == trainer_choice).all()
             for i in selected_trainer:
                 print(i.name)
 
@@ -145,18 +142,19 @@ def main():
             class_choice = input("What class do you wanna take?")
 
             trainer = session.query(Trainer).join(Exercise).filter(Exercise.name.ilike(f"%{class_choice}%")).first()
+            # trainer = session.query(Trainer).filter(Trainer.exercises.any(Exercise.name.ilike(f"%{class_choice}%"))).first()
 
             new = Member(first_name=first_name, 
                         last_name=last_name, 
                         gym_goal=gym_goal,
                         trainings_per_week= trainings_per_week,
-                        trainer_id = trainer.id if trainer else None
+                        trainer_id = trainer.id
                         )
             session.add(new)
             session.commit()
             print("")
             print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.first_name} {trainer.last_name} ")
-            reroute()
+            
 
         elif choice == 4:
             member_id = input("Please type your member ID in order to access the edit menu>>>")
@@ -206,21 +204,28 @@ def main():
 
         elif choice == 5:
             print("We are so sad to see you canceling your membership! :(")
-            deleted_id = input("Enter your ID in order to proceed with membership cancelation>>>")
-            members_data = session.get(Member, deleted_id)
-            session.delete(members_data)
-            session.commit()
-            print(f"{members_data.first_name} {members_data.last_name} has been deleted!!!")
-            goodbye()
-            break
+            print("Enter your name and last name in order to proceed with membership cancelation>>>")
+            deleted_name = input("Type in your first name")
+            deleted_last_name = input("Type in your last name")
 
-        if choice == 6:
+            members_data = session.query(Member).filter(Member.first_name.ilike(deleted_name), Member.last_name.ilike(deleted_last_name)).first()
+            if members_data is not None:
+                session.delete(members_data)
+                session.commit()
+                print(f"{members_data.first_name} {members_data.last_name} has been deleted!!!")
+            else:
+                print("No matching member found.")
+
+        else:
+            choice = 6
             goodbye()
-            break
+            
+               
 
 
 def goodbye():
     print("Thank you for checking out our gym! Hope you enjoyed your time here!!!")
+    quit()
 
 if __name__ == "__main__":
     main()
