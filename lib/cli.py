@@ -129,7 +129,7 @@ def main():
 
             # selected_trainer = session.query(Exercise).join(Trainer).filter(Trainer.id == trainer_choice).all()
             for i in selected_trainer:
-                print(i.name)
+                print(i)
 
                                     
 
@@ -162,17 +162,17 @@ def main():
             edit_choice = 0
             while edit_choice != 5:
                 print(f"""
-                        What information would you like to edit?
-                      
-                        1 - First name
-                      
-                        2 - Last Name 
-                      
-                        3 - Gym Goal
-                      
-                        4 - Trainings per week
-                      
-                        5 - Go back to MAIN MENU
+                    What information would you like to edit?
+                    
+                    1 - First name
+                    
+                    2 - Last Name 
+                    
+                    3 - Gym Goal
+                    
+                    4 - Trainings per week
+                    
+                    5 - Go back to MAIN MENU
                       """
                       )
                 edit_choice = int(input())
@@ -204,9 +204,9 @@ def main():
 
         elif choice == 5:
             print("We are so sad to see you canceling your membership! :(")
-            print("Enter your name and last name in order to proceed with membership cancelation>>>")
-            deleted_name = input("Type in your first name")
-            deleted_last_name = input("Type in your last name")
+            print("Enter your name and last name in order to proceed with membership cancelation")
+            deleted_name = input("Type in your first name>>>")
+            deleted_last_name = input("Type in your last name>>>")
 
             members_data = session.query(Member).filter(Member.first_name.ilike(deleted_name), Member.last_name.ilike(deleted_last_name)).first()
             if members_data is not None:
