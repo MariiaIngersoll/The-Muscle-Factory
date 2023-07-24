@@ -67,7 +67,7 @@ def main():
                         print(i.name)
                         print("")
 
-                    selected_class = input("Type name of the class to find out more information!!>>>")
+                    selected_class = input("Type name of the class to find out more information!!>>> ")
                     name_of_class = session.query(Exercise).filter(Exercise.name.ilike(f"%{selected_class}%")).all()
                     if name_of_class:
                         for exercise in name_of_class:
@@ -88,7 +88,9 @@ def main():
 
                         reroute()
                     else:
-                        raise NameError("No matching class found.")
+                        print("No matching class found.")
+                    
+                        reroute()
                 
                 if exercise_choice == 2:
                     filtered_by_intensity = session.query(
@@ -135,29 +137,34 @@ def main():
 
         elif choice == 3:
             print("Lets Sign Up!")
-            first_name = input("What is your name?")
-            last_name = input("What is your last name?")
-            trainings_per_week = int(input("Whats the number of trainings you want to do per week?"))
-            gym_goal = input("What is your goal?")
-            class_choice = input("What class do you wanna take?")
+            first_name = input("What is your name?>>> ")
+            last_name = input("What is your last name?>>> ")
+            trainings_per_week = int(input("Whats the number of trainings you want to do per week?>>> "))
+            gym_goal = input("What is your goal?>>> ")
+            class_choice = input("What class do you wanna take?>>> ")
 
             trainer = session.query(Trainer).join(Exercise).filter(Exercise.name.ilike(f"%{class_choice}%")).first()
             # trainer = session.query(Trainer).filter(Trainer.exercises.any(Exercise.name.ilike(f"%{class_choice}%"))).first()
 
-            new = Member(first_name=first_name, 
-                        last_name=last_name, 
-                        gym_goal=gym_goal,
-                        trainings_per_week= trainings_per_week,
-                        trainer_id = trainer.id
-                        )
-            session.add(new)
-            session.commit()
-            print("")
-            print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.first_name} {trainer.last_name} ")
+            if trainer:
+
+                new = Member(first_name=first_name, 
+                            last_name=last_name, 
+                            gym_goal=gym_goal,
+                            trainings_per_week= trainings_per_week,
+                            trainer_id = trainer.id
+                            )
+                session.add(new)
+                session.commit()
+                print("")
+                print(f"Welcome to the Muscle Factory gym {new.first_name} {new.last_name}. Hope you enjoy your time here!!! Your instructor is {trainer.first_name} {trainer.last_name} ")
             
+            else:
+                print("")
+                print("We are so sorry but we do not teach this class in our gym! Please select one from out classes list! Thank you.")
 
         elif choice == 4:
-            member_id = input("Please type your member ID in order to access the edit menu>>>")
+            member_id = input("Please type your member ID in order to access the edit menu>>> ")
             members_data = session.get(Member, member_id)
             edit_choice = 0
             while edit_choice != 5:
@@ -177,13 +184,13 @@ def main():
                       )
                 edit_choice = int(input())
                 if edit_choice == 1:
-                    new_name = input("What would you like to change your first name to?>>>")
+                    new_name = input("What would you like to change your first name to?>>> ")
                     members_data.first_name = new_name
                     session.commit()
                     print(f"Your last name have been changed to {members_data.first_name}")
 
                 if edit_choice == 2:
-                    new_name = input("What would you like to change your last name to?>>>")
+                    new_name = input("What would you like to change your last name to?>>> ")
                     members_data.last_name = new_name
                     session.commit()
                     print(f"Your last name have been changed to {members_data.last_name}")
@@ -195,7 +202,7 @@ def main():
                     print(f"Your new gym goal is {members_data.gym_goal}")
 
                 if edit_choice == 4:
-                    trainings_per_week_new = int(input("What is the amount of gym sessions you can attend weekly? Please enter a number.>>>"))
+                    trainings_per_week_new = int(input("What is the amount of gym sessions you can attend weekly? Please enter a number>>> "))
                     members_data.trainings_per_week = trainings_per_week_new
                     session.commit()
                     print(f"Number of gym sessions per week has been updated to {members_data.trainings_per_week}")
@@ -205,16 +212,20 @@ def main():
         elif choice == 5:
             print("We are so sad to see you canceling your membership! :(")
             print("Enter your name and last name in order to proceed with membership cancelation")
-            deleted_name = input("Type in your first name>>>")
-            deleted_last_name = input("Type in your last name>>>")
+            deleted_name = input("Type in your first name>>> ")
+            deleted_last_name = input("Type in your last name>>> ")
 
             members_data = session.query(Member).filter(Member.first_name.ilike(deleted_name), Member.last_name.ilike(deleted_last_name)).first()
             if members_data is not None:
                 session.delete(members_data)
                 session.commit()
-                print(f"{members_data.first_name} {members_data.last_name} has been deleted!!!")
+                print("")
+                print(f"Dear {members_data.first_name} {members_data.last_name}, your gym membership has been cancelled :(")
+                print("")
+                goodbye()
             else:
                 print("No matching member found.")
+
 
         else:
             choice = 6
